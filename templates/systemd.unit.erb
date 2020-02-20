@@ -1,0 +1,18 @@
+<%- if @config['Unit'] -%>
+[Unit]
+<%- @config['Unit'].each do |key, value| -%>
+<%= key %>=<%= value %>
+<%- end -%>
+<%- end -%>
+
+[<%= (@config['type'] || node['_default_unit_type']).to_s.capitalize %>]
+<%- @config[(@config['type'] || node['_default_unit_type']).to_s.capitalize].each do |key, value| -%>
+<%= key %>=<%= value %>
+<%- end -%>
+
+<%- if @config['Install'] -%>
+[Install]
+<%- @config['Install'].each do |key, value| -%>
+<%= key %>=<%= value %>
+<%- end -%>
+<%- end -%>

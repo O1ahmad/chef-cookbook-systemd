@@ -1,0 +1,55 @@
+## COMPILED ##
+##############
+*.class
+*.com
+*.dll
+*.exe
+*.o
+*.pyc
+*.so
+*/rdoc/
+a.out
+
+# Testing #
+###########
+.circleci/*
+.foodcritic
+.kitchen*
+.rubocop.yml
+.travis.yml
+kitchen.yml*
+test/*
+
+# SCM #
+#######
+.git
+.gitattributes
+.gitconfig
+.github/*
+.gitignore
+.gitmodules
+.svn
+*/.bzr/*
+*/.git
+*/.hg/*
+*/.svn/*
+
+# Berkshelf #
+#############
+Berksfile
+Berksfile.lock
+cookbooks/*
+tmp
+
+# Bundler #
+###########
+vendor/*
+Gemfile
+Gemfile.lock
+
+# Cookbooks #
+#############
+CHANGELOG*
+CONTRIBUTING*
+TESTING*
+CODE_OF_CONDUCT*

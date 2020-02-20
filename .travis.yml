@@ -1,0 +1,19 @@
+---
+language: ruby
+rvm:
+  - 2.6.3
+
+services:
+  - docker
+
+env:
+  global:
+    - ROLE_NAME: <cookbook>
+
+before_script:
+  - gem install foodcritic
+
+script:
+  - foodcritic .
+  - bundle exec rubocop .
+  - bundle exec kitchen test config-unit-centos-7

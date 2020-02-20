@@ -1,0 +1,109 @@
+---
+driver:
+  name: docker
+
+# Special config for enabling systemd init
+default_driver_config: &default_driver_config
+  run_command: /sbin/init
+  cap_add:
+    - SYS_ADMIN
+  run_options:
+    env: container=docker
+  volume:
+    - /sys/fs/cgroup:/sys/fs/cgroup
+  provision_command:
+    - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+    - systemctl enable sshd.service
+
+transport:
+  # TODO: remove with better solution than workaround:
+  # https://github.com/test-kitchen/test-kitchen/issues/1035
+  max_ssh_sessions: 6
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  product_version: 15.8.23
+  chef_license: accept
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7
+    driver_config:
+      <<: *default_driver_config
+  - name: ubuntu-16.04
+    driver_config:
+      <<: *default_driver_config
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable ssh.service
+  - name: ubuntu-18.04
+    driver_config:
+      <<: *default_driver_config
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable ssh.service
+  - name: ubuntu-19.04
+    driver_config:
+      <<: *default_driver_config
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable ssh.service
+  - name: debian-8
+    driver_config:
+      <<: *default_driver_config
+      run_command: /lib/systemd/systemd
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable ssh.service
+  - name: debian-9
+    driver_config:
+      <<: *default_driver_config
+      run_command: /lib/systemd/systemd
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable ssh.service
+
+suites:
+  - name: config_unit
+    run_list:
+      - recipe[systemd::default]
+    verifier:
+      inspec_tests:
+        - test/integration/config/config_unit
+    attributes:
+      unit_configs:
+        - name: test-service
+          Unit:
+            Description: This is a test service
+            After: network-online.target
+            Wants: network-online.target
+            Requires: test-service.socket
+          Service:
+            User: kitchen
+            Group: kitchen
+            ExecStart: /usr/bin/sleep infinity
+            ExecReload: /bin/kill -s HUP $MAINPID
+          Install:
+            WantedBy: "multi-user.target"
+        - name: test-service
+          type: socket
+          Unit:
+            Description: "This is a test socket unit which specifies the test-service 'socket' unit type"
+          Socket:
+            ListenStream: 0.0.0.0:1234
+            Accept: 'true'
+          Install:
+            WantedBy: sockets.target
+        - name: tmp-stdin
+          type: mount
+          path: /run/systemd/system
+          Unit:
+            Description: This is a test mount init which overrides the default unit path
+          Mount:
+            What: /dev/stdin
+            Where: /tmp/stdin
+          Install:
+            WantedBy: mount.target
