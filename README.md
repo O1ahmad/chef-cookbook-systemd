@@ -1,10 +1,10 @@
+<p><img src="https://siliconangle.com/wp-content/blogs.dir/1/files/2018/02/1486909_635690216474466_54627279_n.png" alt="ansible logo" title="ansible" align="left" height="80" /></p>
 <p><img src="https://www.servethehome.com/wp-content/uploads/2017/11/Redhat-logo.jpg" alt="redhat logo" title="redhat" align="right" height="60" /></p>
 
 Chef Cookbook:vertical_traffic_light:Systemd
 =========
 [![Supermarket Cookbook](*cookbook-shield-link*)](--cookbook-link--)
 [![GitHub release (latest by date)](==cookbook-link--)
-[![Downloads](*downloads-shield-link*)](--cookbook-link--)
 [![Build Status](*build-shield-link*)](--cookbook-link--)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
