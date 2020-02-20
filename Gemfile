@@ -9,6 +9,7 @@ group :integration do
   gem 'concurrent-ruby'
   gem 'kitchen-docker'
   gem 'kitchen-inspec'
+  gem 'kitchen-sync'
   gem 'rubocop'
   gem 'test-kitchen'
 end

@@ -340,6 +340,9 @@ GEM
       hashie (~> 3.4)
       inspec (>= 1.47, < 5.0)
       test-kitchen (>= 1.6, < 3)
+    kitchen-sync (2.2.1)
+      net-sftp
+      test-kitchen (>= 1.0.0)
     libyajl2 (1.2.0)
     license-acceptance (1.0.13)
       pastel (~> 0.7)
@@ -630,6 +633,7 @@ DEPENDENCIES
   concurrent-ruby
   kitchen-docker
   kitchen-inspec
+  kitchen-sync
   rake
   rubocop
   test-kitchen
