@@ -2,8 +2,8 @@ name 'O1-systemd'
 maintainer '0x0I'
 maintainer_email 'zer0ne.io.x@gmail.com'
 license 'MIT'
-description 'chef cookbook template for 0x0I developed infrastructure' \
-            ' installation, configuration and operations as software'
+description 'Chef cookbook that installs and configures Systemd units: system components' \
+            ' and services managed by the Linux systemd system/service manager.'
 version '0.1.0'
 chef_version '>= 14.0'
 %w[centos fedora redhat debian ubuntu].each do |os|
