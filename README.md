@@ -410,64 +410,64 @@ Dependencies
 
 None
 
-Example Roles file
+Example Role definitions
 ----------------
 default example (no custom unit configurations specified):
 ```json
-{
-  "systemd": {}
-}
+  {
+    "systemd": {}
+  }
 ```
 
 service/socket/mount pair:
 ```json
-{
-  "systemd":
-   {
-      "unit_configs": [
-        {
-          "name": "my-service",
-          "Unit": {
-            "After": "network-online.target",
-            "Wants": "network-online.target",
-            "Requires": "my-service.socket"
+ {
+    "systemd":
+     {
+        "unit_configs": [
+          {
+            "name": "my-service",
+            "Unit": {
+              "After": "network-online.target",
+              "Wants": "network-online.target",
+              "Requires": "my-service.socket"
+            },
+            "Service": {
+              "User": "web",
+              "Group": "web",
+              "ExecStart": "/usr/local/bin/my_service $ARGS",
+              "ExecReload": "/bin/kill -s HUP $MAINPID"
+            },
+            "Install": {
+              "WantedBy": "multi-user.target"
+            }
           },
-          "Service": {
-            "User": "web",
-            "Group": "web",
-            "ExecStart": "/usr/local/bin/my_service $ARGS",
-            "ExecReload": "/bin/kill -s HUP $MAINPID"
+          {
+            "name": "my-service",
+            "type": "socket",
+            "Socket": {
+              "ListenStream": "0.0.0.0:4321",
+              "Accept": "true"
+            },
+            "Install": {
+              "WantedBy": "sockets.target"
+            }
           },
-          "Install": {
-            "WantedBy": "multi-user.target"
-          }
-        },
-        {
-          "name": "my-service",
-          "type": "socket",
-          "Socket": {
-            "ListenStream": "0.0.0.0:4321",
-            "Accept": "true"
+          {
+            "name": "var-data-my_service",
+            "type": "mount",
+            "path": "/run/systemd/system",
+            "Mount": {
+              "What": "/dev/nvme0",
+              "Where": "/var/data/my_service"
+            },
+            "Install": {
+              "WantedBy": "multi-user.target"
+            }
           },
-          "Install": {
-            "WantedBy": "sockets.target"
-          }
-        },
-        {
-          "name": "var-data-my_service",
-          "type": "mount",
-          "path": "/run/systemd/system",
-          "Mount": {
-            "What": "/dev/nvme0",
-            "Where": "/var/data/my_service"
-          },
-          "Install": {
-            "WantedBy": "multi-user.target"
-          }
-        },
-      ]
-   }
-}
+        ]
+     }
+  }
 ```
 
 License
