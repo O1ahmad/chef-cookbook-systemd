@@ -1,4 +1,4 @@
-name 'systemd'
+name 'O1-systemd'
 maintainer '0x0I'
 maintainer_email 'zer0ne.io.x@gmail.com'
 license 'MIT'

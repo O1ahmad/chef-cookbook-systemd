@@ -1,7 +1,7 @@
 DEPENDENCIES
-  systemd
+  O1-systemd
     path: .
     metadata: true
 
 GRAPH
-  systemd (0.1.0)
+  O1-systemd (0.1.0)

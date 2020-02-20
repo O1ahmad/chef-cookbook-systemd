@@ -82,7 +82,7 @@ platforms:
 suites:
   - name: config_unit
     run_list:
-      - recipe[systemd::default]
+      - recipe[O1-systemd::default]
     verifier:
       inspec_tests:
         - test/integration/config/config_unit
