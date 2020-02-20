@@ -135,16 +135,25 @@ Manages daemons and the processes they consist of.
 
 #### Example
 
- ```yaml
-  unit_config:
-    # path: /etc/systemd/system/example-service.service
-    - name: example-service
-      Unit:
-        Description: Sleepy service
-      Service:
-        ExecStart: /usr/bin/sleep infinity
-      Install:
-        WantedBy: multi-user.target
+```json
+ {
+    "unit_configs": [
+      {
+        # path: /etc/systemd/system/example-service.service
+        "name": "example-service",
+        "Unit": {
+          "Description": "Sleepy Service",
+        },
+        "Service": {
+          "ExecStart": "/usr/bin/sleep infinity",
+        },
+        "Install": {
+          "WantedBy": "multi-user.target"
+        }
+      }
+    ]
+ }
+ 
 ```
 **[[Socket](http://man7.org/linux/man-pages/man5/systemd.socket.5.html)]**
 
@@ -152,19 +161,26 @@ Encapsulates local IPC or network sockets in the system.
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: docker
-      type: socket
-      Unit:
-        Description: Listens/accepts connection requests at /var/run/docker/sock (implicitly *Requires=* associated docker.service)
-      Socket:
-        ListenStream: /var/run/docker.sock
-        SocketMode: 0660
-        SockerUser: root
-        SocketGroup: docker
-      Install:
-        WantedBy: sockets.target
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "docker",
+        "type": "socket",
+        "Unit": {
+          "Description": "Listens/accepts connection requests at /var/run/docker/sock (implicitly *Requires=* associated docker.service)",
+        },
+        "Socket": {
+          "ListenStream": "/var/run/docker.sock",
+          "SocketMode": "0660",
+          "ListenStream": "/var/run/docker.sock",,
+        },
+        "Install": {
+          "WantedBy": "sockets.target"
+        }
+      }
+    ]
+ }
 ```
 
 **[[Mount](http://man7.org/linux/man-pages/man5/systemd.mount.5.html)]**
@@ -173,20 +189,27 @@ Controls mount points in the sytem.
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: tmp_new
-      type: mount
-      Unit:
-        Description: New Temporary Directory (/tmp_new)
-        Conflicts: umount.target
-        Before: local-fs.target umount.target
-        After: swap.target
-      Mount:
-        What: tmpfs
-        Where: /tmp_new
-        Type: tmpfs
-        Options: mode=1777,strictatime,nosuid,nodev
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "tmp_new",
+        "type": "mount",
+        "Unit": {
+          "Description": "New Temporary Directory (/tmp_new)",
+          "Conflicts": "umount.target",
+          "Before": "local-fs.target umount.target",
+          "After": "swap.target"
+        },
+        "Mount": {
+          "What": "tmpfs",
+          "Where": "/tmp_new",
+          "Type": "tmpfs",
+          "Options": "mode=1777,strictatime,nosuid,nodev:
+        }
+      }
+    ]
+ }
 ```
 
 **[[Automount](http://man7.org/linux/man-pages/man5/systemd.automount.5.html)]**
@@ -195,17 +218,24 @@ Provides automount capabilities for on-demand mounting of file systems as well a
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: proc-sys-fs-binfmt_misc
-      type: automount
-      Unit:
-        Description: Arbitrary Executable File Formats File System Automount Point
-        Documentation: https://www.kernel.org/doc/html/latest/admin-guide/binfmt-misc.html
-        ConditionPathExists: /proc/sys/fs/binfmt_misc/
-        ConditionPathIsReadWrite: /proc/sys/
-      Automount:
-        Where: /proc/sys/fs/binfmt_misc
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "proc-sys-fs-binfmt_misc",
+        "type": "automount",
+        "Unit": {
+          "Description": "Arbitrary Executable File Formats File System Automount Point",
+          "Documentation": "https://www.kernel.org/doc/html/latest/admin-guide/binfmt-misc.html",
+          "ConditionPathExists": "/proc/sys/fs/binfmt_misc/",
+          "ConditionPathIsReadWrite": "/proc/sys/",
+        },
+        "Automount": {
+          "Where": "/proc/sys/fs/binfmt_misc",
+        }
+      }
+    ]
+ }
 ```
 
 **[[Device](http://man7.org/linux/man-pages/man5/systemd.device.5.html)]**
@@ -232,19 +262,25 @@ This unit type has no specific options and as such a separate `[Target]` section
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: graphical
-      path: /usr/lib/systemd/system/graphical.target
-      type: target
-      Unit:
-        Description: Graphical Interface
-        Documentation: man:systemd.special(7)
-        Requires: multi-user.target
-        Wants: display-manager.service
-        Conflicts: rescue.service rescue.target
-        After: multi-user.target rescue.service rescue.target display-manager.service
-        AllowIsolate: yes
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "graphical",
+        "path": "/usr/lib/systemd/system",
+        "type": "target",
+        "Unit": {
+          "Description": "Graphical Interface",
+          "Documentation": "man:systemd.special(7)",
+          "Requires": "multi-user.target",
+          "Wants": "display-manager.service",
+          "Conflicts": "rescue.service rescue.target",
+          "After": "multi-user.target rescue.servie rescue.target display-manager.service"
+          "AllowIsolate": "yes",
+        }
+      }
+    ]
+ }
 ```
 
 **[[Timer](http://man7.org/linux/man-pages/man5/systemd.timer.5.html)]**
@@ -253,16 +289,23 @@ Triggers activation of other units based on timers.
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: dnf-makecache
-      type: timer
-      Timer:
-        OnBootSec: 10min
-        OnUnitInactiveSec: 1h
-        Unit: dnf-makecache.service
-      Install:
-        WantedBy: multi-user.target
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "dns-makecache",
+        "type": "timer",
+        "Timer": {
+          "OnBootSec": "10min",
+          "OnUnitInactiveSec": "1h",
+          "Unit": "dnf-mackecache.service"
+        },
+        "Install": {
+          "WantedBy": "multi-user.target"
+        }
+      }
+    ]
+ }
 ```
 
 **[[Swap](http://man7.org/linux/man-pages/man5/systemd.swap.5.html)]**
@@ -271,24 +314,33 @@ Encapsulates memory swap partitions or files of the operating system.
 
 #### Example
 
- ```yaml
+ ```bash
   # Ensure existence of swap file
   mkdir -p /var/vm
   fallocate -l 1024m /var/vm/swapfile
   chmod 600 /var/vm/swapfile
   mkswap /var/vm/swapfile
-
+```
 ------------------------------------
-
-  unit_config:
-    - name: var-vm-swap
-      type: swap
-      Unit:
-        Description=Turn on swap for /var/vm/swapfile
-      Swap:
-        What: /var/vm/swapfile
-      Install:
-        WantedBy: multi-user.target
+        
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "var-vm-swap",
+        "type": "swap",
+        "Unit": {
+          "Description": "Turn on swap for /var/vm/swapfile",
+        },
+        "Swap": {
+          "What": "/var/vm/swapfile"
+        },
+        "Install": {
+          "WantedBy": "multi-user.target"
+        }
+      }
+    ]
+ }
 ```
 
 **[[Path](http://man7.org/linux/man-pages/man5/systemd.path.5.html)]**
@@ -297,15 +349,22 @@ Activates other services when file system objects change or are modified.
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: Repository Code Coverage Analysis trigger
-      type: path
-      Unit:
-        Description: Activate code coverage analysis on modified git repositories
-      Path:
-        PathChanged: /path/to/git/repo
-        Unit: code-coverage-analysis
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "repository-code-coverage-analysis-trigger",
+        "type": "path",
+        "Unit": {
+          "Description": "Activate code coverage analysis on modified git repositories",
+        },
+        "Path": {
+          "PathChanged": "/path/to/git/repo",
+          "Unit": "code-coverage-analysis.service"
+        }
+      }
+    ]
+ }
 ```
 
 **[[Scope](http://man7.org/linux/man-pages/man5/systemd.scope.5.html)]**
@@ -316,23 +375,25 @@ Manages a set of system or foreign/remote processes.
 
 #### Example
 
- ```yaml
- # *This configuration is for a transient unit file, created programmatically via the systemd API. Do not copy or edit.*
-  unit_config:
-    - name: user-session
-      type: scope
-
-      Unit:
-        Description: Session of user
-        Wants: user-runtime-dir@1000.service
-        Wants: user@1000.service
-        After: systemd-logind.service systemd-user-sessions.service user-runtime-dir@1000.service user@1000.service
-        RequiresMountsFor: /home/user
-        Scope:
-          Slice: user-1000.slice
-       Scope:
-          SendSIGHUP=yes
-          TasksMax=infinity
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "user-session",
+        "type": "scope",
+        "Unit": {
+          "Description": "Session of user",
+          "Wants": "user-runtime-dir@1000.service user@1000.service",
+          "After": "systemd-logind.service systemd-user-sessions.service user-runtime-dir@1000.service user@1000.service",
+          "RequiresMountsFor": "/home/user"
+        },
+        "Scope": {
+          "SendSIGHUP": "yes",
+          "TasksMax": "Infinity"
+        }
+      }
+    ]
+ }
 ```
 
 **[[Slice](http://man7.org/linux/man-pages/man5/systemd.slice.5.html)]**
@@ -348,49 +409,64 @@ Dependencies
 
 None
 
-Example Playbook
+Example Roles file
 ----------------
 default example (no custom unit configurations specified):
-```
-- hosts: all
-  roles:
-  - role: 0x0I.systemd
+```json
+{
+  "systemd": {}
+}
 ```
 
 service/socket/mount pair:
-```
-- hosts: webservers
-  roles:
-  - role: 0x01.systemd
-    vars:
-      unit_config:
-      - name: "my-service"
-        Unit:
-          After: network-online.target
-          Wants: network-online.target
-          Requires: my-service.socket
-        Service:
-          User: 'web'
-          Group: 'web'
-          ExecStart: '/usr/local/bin/my_service $ARGS'
-          ExecReload: '/bin/kill -s HUP $MAINPID'
-        Install:
-          WantedBy: 'multi-user.target'
-      - name: "my-service"
-        type: "socket"
-        Socket:
-          ListenStream: '0.0.0.0:4321'
-          Accept: 'true'
-        Install:
-          WantedBy: 'sockets.target'
-      - name: "var-data-my_service"
-        type: "mount"
-        path: "/run/systemd/system"
-        Mount:
-          What: '/dev/nvme0'
-          Where: '/var/data/my_service'
-        Install:
-          WantedBy: 'multi-user.target'
+```json
+{
+  "systemd":
+   {
+      "unit_configs": [
+        {
+          "name": "my-service",
+          "Unit": {
+            "After": "network-online.target",
+            "Wants": "network-online.target",
+            "Requires": "my-service.socket"
+          },
+          "Service": {
+            "User": "web",
+            "Group": "web",
+            "ExecStart": "/usr/local/bin/my_service $ARGS",
+            "ExecReload": "/bin/kill -s HUP $MAINPID"
+          },
+          "Install": {
+            "WantedBy": "multi-user.target"
+          }
+        },
+        {
+          "name": "my-service",
+          "type": "socket",
+          "Socket": {
+            "ListenStream": "0.0.0.0:4321",
+            "Accept": "true",
+          },
+          "Install": {
+            "WantedBy": "sockets.target"
+          }
+        },
+        {
+          "name": ""var-data-my_service"",
+          "type": "mount",
+          "path": "/run/systemd/system"
+          "Mount": {
+            "What": "/dev/nvme0",
+            "Where": "/var/data/my_service"
+          }
+          "Install": {
+            "WantedBy": "multi-user.target"
+          }
+        },
+      ]
+   }
+}
 ```
 
 License
@@ -401,4 +477,4 @@ MIT
 Author Information
 ------------------
 
-This role was created in 2019 by O1.IO.
+This cookbook was created in 2020 by 0xO1.IO.
