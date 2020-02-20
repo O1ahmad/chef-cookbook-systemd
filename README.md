@@ -3,9 +3,9 @@
 
 Chef Cookbook:vertical_traffic_light:Systemd
 =========
-[![Supermarket Cookbook](*cookbook-shield-link*)](--cookbook-link--)
-[![GitHub release (latest by date)](==cookbook-link--)
-[![Build Status](*build-shield-link*)](--cookbook-link--)
+[![Cookbook Version](https://img.shields.io/cookbook/v/O1-systemd.svg)](https://supermarket.chef.io/cookbooks/O1-systemd)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/chef-cookbook-systemd?color=yellow)
+[![Build Status](https://travis-ci.org/0x0I/chef-cookbook-systemd.svg?branch=master)](https://travis-ci.org/0x0I/chef-cookbook-systemd)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
