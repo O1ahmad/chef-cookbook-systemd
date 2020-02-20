@@ -1,0 +1,7 @@
+DEPENDENCIES
+  systemd
+    path: .
+    metadata: true
+
+GRAPH
+  systemd (0.1.0)
