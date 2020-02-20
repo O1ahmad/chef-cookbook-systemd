@@ -45,7 +45,7 @@ Variables are available and organized according to the following software & mach
 
 _The following variables can be customized to control various aspects of installation of individual systemd units. It is assumed that the host has a working version of the systemd package. Available versions based on OS distribution can be found [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=systemd&submit=Search+...&system=&arch=)_.
 
-`[unit_config: <config-list-entry>:] path:` (**default**: <string> `/etc/systemd/system`)
+`[unit_configs: <config-list-entry>:] path:` (**default**: <string> `/etc/systemd/system`)
 - load path to systemd unit configuration.
 
   In addition to /etc/systemd/system (*default*), unit configs and associated drop-in ".d" directory overrides for system services can be placed in `/usr/lib/systemd/system` or `/run/systemd/system` directories.
@@ -75,15 +75,22 @@ _The following variables can be customized to control various aspects of install
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: apache
-      path: /run/systemd/system
-      Service:
-        ExecStart: /usr/sbin/httpd
-        ExecReload: /usr/sbin/httpd $OPTIONS -k graceful
-      Install:
-        WantedBy: multi-user.target
+ ```json
+ {
+    "unit_configs": [
+      {
+        "name": "apache",
+        "path": "/run/systemd/system",
+        "Service": {
+          "ExecStart": "/usr/sbin/httpd",
+          "ExecReload": "/usr/sbin/httpd $OPTIONS -k graceful"
+        },
+        "Install": {
+          "WantedBy": "multi-user.target"
+        }
+      }
+    ]
+ }
 ```
 
 `[unit_config: <config-list-entry>:] type: <string>` (**default**: `service`)
@@ -91,15 +98,22 @@ _The following variables can be customized to control various aspects of install
 
 #### Example
 
- ```yaml
-  unit_config:
-    - name: apache
-      type: socket
-      Socket:
-        ListenStream: 0.0.0.0:8080
-        Accept: yes
-      Install:
-        WantedBy: sockets.target
+```json
+ {
+    "unit_configs": [
+      {
+        "name": "apache",
+        "type": "socket",
+        "Socket": {
+          "ListenStream": "0.0.0.0:8080",
+          "Accept": "yes"
+        },
+        "Install": {
+          "WantedBy": "sockets.target"
+        }
+      }
+    ]
+ }
 ```
 
 #### Config
