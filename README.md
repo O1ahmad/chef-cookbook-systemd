@@ -135,11 +135,11 @@ Manages daemons and the processes they consist of.
 
 #### Example
 
+**note:** # *path*: /etc/systemd/system, *type*: service
 ```json
  {
     "unit_configs": [
       {
-        # path: /etc/systemd/system/example-service.service
         "name": "example-service",
         "Unit": {
           "Description": "Sleepy Service",
@@ -173,7 +173,8 @@ Encapsulates local IPC or network sockets in the system.
         "Socket": {
           "ListenStream": "/var/run/docker.sock",
           "SocketMode": "0660",
-          "ListenStream": "/var/run/docker.sock",,
+          "SockerUser": "root",
+          "SocketGroup": "docker"
         },
         "Install": {
           "WantedBy": "sockets.target"
@@ -275,8 +276,8 @@ This unit type has no specific options and as such a separate `[Target]` section
           "Requires": "multi-user.target",
           "Wants": "display-manager.service",
           "Conflicts": "rescue.service rescue.target",
-          "After": "multi-user.target rescue.servie rescue.target display-manager.service"
-          "AllowIsolate": "yes",
+          "After": "multi-user.target rescue.servie rescue.target display-manager.service",
+          "AllowIsolate": "yes"
         }
       }
     ]
@@ -446,20 +447,20 @@ service/socket/mount pair:
           "type": "socket",
           "Socket": {
             "ListenStream": "0.0.0.0:4321",
-            "Accept": "true",
+            "Accept": "true"
           },
           "Install": {
             "WantedBy": "sockets.target"
           }
         },
         {
-          "name": ""var-data-my_service"",
+          "name": "var-data-my_service",
           "type": "mount",
-          "path": "/run/systemd/system"
+          "path": "/run/systemd/system",
           "Mount": {
             "What": "/dev/nvme0",
             "Where": "/var/data/my_service"
-          }
+          },
           "Install": {
             "WantedBy": "multi-user.target"
           }
