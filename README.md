@@ -1,7 +1,7 @@
 <p><img src="https://siliconangle.com/wp-content/blogs.dir/1/files/2018/02/1486909_635690216474466_54627279_n.png" alt="ansible logo" title="ansible" align="left" height="80" /></p>
 <p><img src="https://www.servethehome.com/wp-content/uploads/2017/11/Redhat-logo.jpg" alt="redhat logo" title="redhat" align="right" height="60" /></p>
 
-Chef Cookbook:vertical_traffic_light:Systemd
+Chef Cookbook :vertical_traffic_light: Systemd
 =========
 [![Cookbook Version](https://img.shields.io/cookbook/v/O1-systemd.svg)](https://supermarket.chef.io/cookbooks/O1-systemd)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/chef-cookbook-systemd?color=yellow)
